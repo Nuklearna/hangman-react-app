@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const baseURL = "https://api.quotable.io/random";
 
-export default function Quote() {
+function Quote() {
     const [content, setContent] = React.useState(null);
     const [error, setError] = React.useState(null);
   
@@ -21,7 +21,10 @@ export default function Quote() {
   
     return (
       <div>
-        <h1>{content.content}</h1>
+        <p>{content.content}</p>
       </div>
     );
   }
+
+  
+  export {Quote}

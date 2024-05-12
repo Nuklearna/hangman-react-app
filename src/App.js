@@ -1,9 +1,9 @@
 import './App.css';
-import Quote from './components/Quote';
+import Hangman from './components/Hangman';
 
 
 export default function App() {
   return (
-    <Quote/>
+    <Hangman/>
   );
 }
