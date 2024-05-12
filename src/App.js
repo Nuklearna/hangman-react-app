@@ -1,11 +1,9 @@
 import './App.css';
+import Quote from './components/Quote';
 
-function App() {
+
+export default function App() {
   return (
-    <div className="App">
-      I'm ok 
-    </div>
+    <Quote/>
   );
 }
-
-export default App;
