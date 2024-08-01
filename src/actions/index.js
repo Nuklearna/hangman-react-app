@@ -13,15 +13,8 @@ export const FETCH_HIGH_SCORES_SUCCESS = 'FETCH_HIGH_SCORES_SUCCESS';
 export const POST_HIGH_SCORE_SUCCESS = 'POST_HIGH_SCORE_SUCCESS';
 
 export const fetchQuote = () => async dispatch => {
-    try {
-        const response = await axios.get('https://api.quotable.io/random');
-        dispatch({
-            type: FETCH_QUOTE,
-            payload: response.data
-        });
-    } catch (error) {
-        console.error('Failed to fetch quote:', error);
-    }
+    const response = await axios.get('https://api.quotable.io/random');
+    dispatch({ type: FETCH_QUOTE, payload: response.data });
 };
 
 export const handleGuess = letter => ({
@@ -37,6 +30,38 @@ export const setGameOver = () => ({
     type: SET_GAME_OVER
 });
 
+// export const fetchHighScores = () => async dispatch => {
+//     try {
+//         const response = await axios.get(API_URL);
+//         dispatch({
+//             type: FETCH_HIGH_SCORES_SUCCESS,
+//             payload: response.data
+//         });
+//     } catch (error) {
+//         console.error('Error fetching high scores:', error);
+//     }
+// };
+
+// export const postHighScore = (quoteId, length, uniqueCharacters, userName, error, duration, score) => async dispatch => {
+//     try {
+//         const highScore = {
+//             quoteId,
+//             length,
+//             uniqueCharacters,
+//             userName,
+//             error,
+//             duration,
+//             score
+//         };
+//         const response = await axios.post(API_URL, highScore);
+//         dispatch({
+//             type: POST_HIGH_SCORE_SUCCESS,
+//             payload: response.data
+//         });
+//     } catch (error) {
+//         console.error('Error posting high score:', error);
+//     }
+// };
 export const fetchHighScores = () => async dispatch => {
     try {
         const response = await axios.get(API_URL);
@@ -49,16 +74,15 @@ export const fetchHighScores = () => async dispatch => {
     }
 };
 
-export const postHighScore = (quoteId, length, uniqueCharacters, userName, error, duration, score) => async dispatch => {
+export const postHighScore = (quoteId, length, uniqueCharacters, userName, errors, duration) => async dispatch => {
     try {
         const highScore = {
             quoteId,
             length,
             uniqueCharacters,
             userName,
-            error,
-            duration,
-            score
+            errors,
+            duration
         };
         const response = await axios.post(API_URL, highScore);
         dispatch({
@@ -66,6 +90,7 @@ export const postHighScore = (quoteId, length, uniqueCharacters, userName, error
             payload: response.data
         });
     } catch (error) {
+        alert(error)
         console.error('Error posting high score:', error);
     }
 };

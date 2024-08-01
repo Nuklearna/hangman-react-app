@@ -34,53 +34,74 @@ class Hangman extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        // Check if game status has changed to 'gameOver'
-        if (this.props.gameStatus === 'gameOver' && prevProps.gameStatus !== 'gameOver') {
-            this.gameOverLogic();
+        if (this.props.answer !== prevProps.answer || this.props.error !== prevProps.error) {
+            this.checkGameStatus();
         }
     }
 
     handleNameSubmit = () => {
         if (this.state.userName.trim() !== '') {
             this.props.fetchQuote();
-            this.setState({ stage: 'playing', startTime: new Date() });
+            this.setState({ stage: 'playing', startTime: new Date() });  // Ensure stage is set to playing
         }
     }
 
     handleGuess = (letter) => {
-        this.props.handleGuess(letter.toLowerCase()); // Ensure lower case is used
+        this.props.handleGuess(letter.toLowerCase());
     }
 
     resetGame = () => {
         this.props.resetGame();
-        this.setState({ userName: "", stage: 'start', showModal: false }); // Reset local state
+        this.setState({ userName: "", stage: 'start', showModal: false });  // Reset the stage to start
     }
 
-    gameOverLogic = () => {
-        const { answer, error, userName, quoteId } = this.props;
+    checkGameStatus = () => {
+        const { answer, error, gameStatus } = this.props;
+        const gameOver = error >= this.props.maxErrors;
+        const isWin = this.guessedQuote().trim() === answer.trim();
+
+        if ((isWin || gameOver) && gameStatus !== 'gameOver') {
+            this.handleGameOver(isWin, gameOver);
+        }
+    }
+
+    handleGameOver = (isWin, gameOver) => {
+        const { answer, error, quoteId } = this.props;
+        const { userName } = this.state;
         const duration = new Date() - this.startTime;
         const length = answer.length;
         const uniqueCharacters = new Set(answer.toLowerCase().replace(/[^a-z]/g, '')).size;
         const score = smarter(length, uniqueCharacters, error, duration);
 
-        this.props.postHighScore(quoteId, length, uniqueCharacters, userName, error, duration, score)
+        const scoreData = {
+            quoteId,
+            length,
+            uniqueCharacters,
+            userName,
+            errors: error,
+            duration
+        };
+
+        this.props.postHighScore(scoreData)
             .then(() => {
                 this.props.fetchHighScores();
-                this.setState({ showModal: true }); // Show modal after posting high score
+                this.setState({ showModal: true });  // Show the modal only after posting high score
             })
             .catch(error => {
                 console.error("Error posting high score:", error);
             });
+
+        this.props.setGameOver();
     }
 
     generateButtons() {
-        const { guessed } = this.props;  // Destructure for easier access
+        const { guessed } = this.props;
         return "abcdefghijklmnopqrstuvwxyz".split("").map(letter => (
             <button className="btn btn-light m-2"
                 key={letter}
                 value={letter}
                 onClick={() => this.handleGuess(letter)}
-                disabled={guessed && guessed.has(letter.toLowerCase())}  // Safety check added
+                disabled={guessed && guessed.has(letter.toLowerCase())}
             >
                 {letter}
             </button>
@@ -99,10 +120,11 @@ class Hangman extends Component {
     }
 
     renderGame() {
-        const { answer, error } = this.props;
+        const { answer, error, gameStatus } = this.props;
         const gameOver = error >= this.props.maxErrors;
-        let gameStat = this.generateButtons();
         const isWin = this.guessedQuote().trim() === answer.trim();
+
+        let gameStat = this.generateButtons();
 
         if (isWin) {
             gameStat = "You Won!";
@@ -123,7 +145,7 @@ class Hangman extends Component {
                 <div className="text-center">
                     <p>Guess the quote:</p>
                     <p>
-                        {!gameOver ? this.guessedQuote() : answer}
+                        {gameStatus !== 'gameOver' ? this.guessedQuote() : answer}
                     </p>
                     <p>{gameStat}</p>
                     <button className='btn btn-info border border-1 text-light' onClick={this.resetGame}>Reset</button>
@@ -135,7 +157,7 @@ class Hangman extends Component {
     render() {
         const { stage, userName, showModal } = this.state;
         const { highScores } = this.props;
-        
+
         return (
             <div>
                 {stage === 'start' ? (
@@ -151,7 +173,7 @@ class Hangman extends Component {
                         <button className='btn btn-info border border-1 text-light' onClick={this.handleNameSubmit}>Start Game</button>
                     </div>
                 </div>
-            ): this.renderGame()}
+            ) : this.renderGame()}
 
             <Modal show={showModal} onHide={() => this.setState({ showModal: false })}>
                 <Modal.Header closeButton>
@@ -159,9 +181,9 @@ class Hangman extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <ul>
-                        {highScores.map((score, index) => (
+                        {highScores.sort((a, b) => (100 / (1 + b.errors)) - (100 / (1 + a.errors))).map((score, index) => (
                             <li key={index}>
-                                {score.userName}: Score: {score.errors}, Duration: {score.duration}
+                                {score.userName}: Score: {100 / (1 + score.errors)}, Duration: {score.duration}ms
                             </li>
                         ))}
                     </ul>
@@ -173,7 +195,7 @@ class Hangman extends Component {
                 </Modal.Footer>
             </Modal>
         </div>
-    );
+        );
     }
 }
 
@@ -186,7 +208,7 @@ const mapStateToProps = state => ({
     quoteId: state.game.quoteId,
     highScores: state.game.highScores,
     length: state.game.answer.length,
-    uniqueCharacters: new Set(state.game.answer.toLowerCase().replace(/[^a-z]/g, '')).size // Calculate unique characters
+    uniqueCharacters: new Set(state.game.answer.toLowerCase().replace(/[^a-z]/g, '')).size
 });
 
 export default connect(mapStateToProps, { fetchQuote, handleGuess, resetGame, setGameOver, postHighScore, fetchHighScores })(Hangman);
