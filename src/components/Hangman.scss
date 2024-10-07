@@ -1,0 +1,88 @@
+@import '../sytles/variables';
+
+
+body {
+	background-color: #ffb48b15;
+	font-family: "Roboto", sans-serif;
+}
+
+h1 {
+	font-family: "Honk", system-ui;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	font-variation-settings:
+	  "MORF" 15,
+	  "SHLN" 50;
+	  font-size: 120px;
+}
+
+h2 {
+	font-family: "Roboto", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 24px;
+}
+
+.button {
+	background-color: #fffb76;
+	border: 2px solid #000;
+	font-size: 16px;
+	margin: 4px 4px;
+	box-shadow: 2px 2px 0 #000;
+	transition: background-color 0.3s ease;
+
+	&:disabled {
+		background-color: #bbb;
+		cursor: not-allowed;
+	}
+
+	&:hover:not(:disabled) {
+		background-color: #ff3daf;
+		color:#fff;
+		box-shadow: 2px 2px 0 #fffb76;
+	}
+}
+
+.start-button {
+	font-weight: 600;
+	border: 2px solid #000;
+	background-color: #ff3daf;
+	color: #ffffff;
+	box-shadow: 2px 2px 0 #000;
+	transition: background-color 0.3s ease;
+	&:hover {
+		background-color: #fffb76;
+		color: #ff3daf;
+		border: 1px solid #ff3daf;
+	}
+}
+
+
+.username-name {
+	font-size: 16px;
+}
+
+.quote-display {
+	white-space: pre-wrap; /* Allows long text to wrap, preserving whitespace */
+    word-wrap: break-word; /* Forces long words to break */
+    overflow-wrap: break-word; /* Break long words for consistency */
+    font-size: 18px;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+
+.status-lost {
+    color: rgba(187, 1, 1, 0.774);
+	font-weight: bold;
+}
+
+.status-won {
+    color: rgb(6, 145, 6);
+	font-weight: bold;
+}
+
+.status-guess {
+    font-weight: bold;
+}

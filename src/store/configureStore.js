@@ -1,13 +1,11 @@
-import { createStore, applyMiddleware } from 'redux';
-import { thunk } from 'redux-thunk'; // Here is the correct named import
-import rootReducer from '../reducers';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import {thunk} from 'redux-thunk';
+import gameReducer from '../reducers/gameReducer';
 
+const rootReducer = combineReducers({
+    game: gameReducer
+});
 
-const configureStore = () => {
-    return createStore(
-        rootReducer,
-        applyMiddleware(thunk) // Apply middleware correctly
-    );
-};
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
-export default configureStore;
+export default store;
