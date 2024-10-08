@@ -6,7 +6,7 @@ body {
 	font-family: "Roboto", sans-serif;
 }
 
-h1 {
+.h1 {
 	font-family: "Honk", system-ui;
 	font-optical-sizing: auto;
 	font-weight: 400;
@@ -15,21 +15,36 @@ h1 {
 	  "MORF" 15,
 	  "SHLN" 50;
 	  font-size: 120px;
+
+	  @media (max-width: 768px) {
+		font-size: 62px;
+	  }
 }
 
-h2 {
+.h2 {
 	font-family: "Roboto", sans-serif;
 	font-weight: 400;
 	font-style: normal;
-	font-size: 24px;
+	font-size: 22px;
+	margin: 24px 0;
+	@media (max-width: 768px) {
+		font-size: 18px;
+	  }
+}
+
+.start-container {
+	width: 50%;
+	@media (max-width: 768px) {
+		width: 100%;
+	  }
 }
 
 .button {
-	background-color: #fffb76;
-	border: 2px solid #000;
+	background-color: $secondary-color;
+	border: 2px solid $neutral-black;
 	font-size: 16px;
 	margin: 4px 4px;
-	box-shadow: 2px 2px 0 #000;
+	box-shadow: 2px 2px 0 $neutral-black;
 	transition: background-color 0.3s ease;
 
 	&:disabled {
@@ -38,38 +53,39 @@ h2 {
 	}
 
 	&:hover:not(:disabled) {
-		background-color: #ff3daf;
-		color:#fff;
-		box-shadow: 2px 2px 0 #fffb76;
+		background-color: $primary-color;
+		color: $neutral-white;
+		box-shadow: 2px 2px 0 $secondary-color;
 	}
 }
 
 .start-button {
 	font-weight: 600;
-	border: 2px solid #000;
-	background-color: #ff3daf;
-	color: #ffffff;
-	box-shadow: 2px 2px 0 #000;
+	border: 2px solid $neutral-black;
+	background-color: $primary-color;
+	color: $neutral-white;
+	box-shadow: 2px 2px 0 $neutral-black;
 	transition: background-color 0.3s ease;
 	&:hover {
-		background-color: #fffb76;
-		color: #ff3daf;
-		border: 1px solid #ff3daf;
+		background-color: $secondary-color;
+		color: $primary-color;
+		border: 1px solid $primary-color;
 	}
 }
 
-
 .username-name {
 	font-size: 16px;
+	margin: 16px 0;
+	color: $primary-color;
 }
 
 .quote-display {
-	white-space: pre-wrap; /* Allows long text to wrap, preserving whitespace */
-    word-wrap: break-word; /* Forces long words to break */
-    overflow-wrap: break-word; /* Break long words for consistency */
+	white-space: pre-wrap; 
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
     font-size: 18px;
     letter-spacing: 5px;
-    margin-bottom: 20px;
+    margin: 40px 0;
 }
 
 
@@ -85,4 +101,5 @@ h2 {
 
 .status-guess {
     font-weight: bold;
+	color: $primary-color;
 }

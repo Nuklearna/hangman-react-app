@@ -71,36 +71,3 @@ export const fetchHighScores = () => async dispatch => {
         console.error('Error fetching high scores:', error);
     }
 };
-
-// export const fetchHighScores = () => async dispatch => {
-//     try {
-//         const response = await axios.get(API_URL);
-//         dispatch({
-//             type: FETCH_HIGH_SCORES_SUCCESS,
-//             payload: response.data
-//         });
-//     } catch (error) {
-//         console.error('Error fetching high scores:', error);
-//     }
-// };
-
-// export const postHighScore = (quoteId, length, uniqueCharacters, userName, errors, duration) => async dispatch => {
-//     try {
-//         const highScore = {
-//             quoteId,
-//             length,
-//             uniqueCharacters,
-//             userName,
-//             errors,
-//             duration
-//         };
-//         const response = await axios.post(API_URL, highScore);
-//         dispatch({
-//             type: POST_HIGH_SCORE_SUCCESS,
-//             payload: response.data
-//         });
-//     } catch (error) {
-//         alert(error)
-//         console.error('Error posting high score:', error);
-//     }
-// };

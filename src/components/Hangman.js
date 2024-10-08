@@ -131,7 +131,7 @@ class Hangman extends Component {
     }
 
     renderGame() {
-        const { answer, error, maxErrors, gameStatus, images } = this.props;
+        const {error, maxErrors, gameStatus, images } = this.props;
         const gameOver = error >= maxErrors;
         const isWin = this.checkForWin();  // Check if the player has won
 
@@ -145,9 +145,9 @@ class Hangman extends Component {
 
         return (
             <div className="container mt-5">
-                    <h1 className="text-center">The Hangman Game </h1>
-                    <div className="row align-items-start">
-                        <div className='col-12'>
+                    <h1 className="text-center h1">The Hangman Game </h1>
+                    <div className="row mt-5">
+                        <div className='col-sm-6'>
                             <div className="text-center">
                                 <div className="username-name"> <b>Username:</b> {this.state.userName}</div>
                                 <div className="hangman-image">
@@ -155,13 +155,13 @@ class Hangman extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-12">
+                        <div className="col-sm-6">
                             <div className="text-center">
-                                <h2 className='mb-5'>Guess the quote:</h2>
+                                <h2 className='h2'>Guess the quote:</h2>
                                 <div className="quote-display">
                                    {this.guessedQuote()}
                                 </div>
-                                <div className="status">
+                                <div className="status mb-2">
                                     {gameOver ? (
                                             <span className="status-lost"> Hey, {this.state.userName} you lost! Give it another try.</span>
                                         ) : isWin ? (
@@ -225,10 +225,10 @@ class Hangman extends Component {
             <div>
                 {gameStatus === 'start' ? (
                     <div className="container mt-5 start-container">
-                        <h1 className="text-center">The Hangman Game</h1>
-                        <div className="w-25 container">
+                        <h1 className="text-center h1">The Hangman Game</h1>
+                        <div className="w-50 container">
                             <div className="text-center d-grid gap-3">
-                                <h2 className="text-center">Enter your name to start the game</h2>
+                                <h2 className="text-center h2">Enter your name to start the game</h2>
                                 <input className='p-1 border border-1'
                                     type="text"
                                     placeholder="Enter your name"
