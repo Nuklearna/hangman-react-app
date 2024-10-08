@@ -2,15 +2,6 @@
 
 This is a simple Hangman game built using React and Redux. The game fetches random quotes for the player to guess and tracks the score, high scores, and errors.
 
-## Table of Contents
-
-- [Getting Started](#getting-started)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Running the Project](#running-the-project)
-- [Running Tests](#running-tests)
-- [Technologies Used](#technologies-used)
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
