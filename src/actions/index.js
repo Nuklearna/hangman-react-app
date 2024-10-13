@@ -9,7 +9,7 @@ export const SET_PLAYING = 'SET_PLAYING';
 export const FETCH_HIGH_SCORES_SUCCESS = 'FETCH_HIGH_SCORES_SUCCESS';
 export const POST_HIGH_SCORE_SUCCESS = 'POST_HIGH_SCORE_SUCCESS';
 
-const API_KEY = 'F7MCvH0XZu/xYNXzSD4AeA==9mcrxvhWznCw2IAR'
+const API_KEY = 'YOUR api-ninjas.com API KEY'
 const API_URL = 'https://my-json-server.typicode.com/stanko-ingemark/hang_the_wise_man_frontend_task/highscores';
 
 // Fetch the quote from the API
